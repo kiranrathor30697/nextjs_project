@@ -1,6 +1,3 @@
-import Link from "next/link"
-import { useRouter } from "next/router"
-
 const Post = ({ posts}) =>{
 
     return  <>
@@ -13,30 +10,19 @@ const Post = ({ posts}) =>{
 export default Post
 
 export async function getStaticPaths(){
-    return {
-        paths:[
-            {
-                params:{postId:"1"}
-            },{
-                params:{postId:"2"}
-            },{
-                params:{postId:"3"}
-            },{
-                params:{postId:"4"}
-            },{
-                params:{postId:"5"}
-            },{
-                params:{postId:"6"}
-            },{
-                params:{postId:"7"}
-            },{
-                params:{postId:"8"}
-            },{
-                params:{postId:"9"}
-            },{
-                params:{postId:"10"}
+    let data = await fetch('https://jsonplaceholder.typicode.com/posts')
+        data = await data.json()
+        const paths = data.map(post=>{
+            return{
+                params:{
+                    postId:`${post.id}`
+                }
             }
-        ],
+        })
+        
+    return {
+      
+        paths,
         fallback:false
     }
 }
@@ -65,17 +51,15 @@ export  const getStaticProps = async (context) => {
 
 
 
+// const Post = ({ posts}) =>{
 
-
-
-// function Post ({post}){
-//     return  <div>
-//                 <p>{post.id}</p>
-//                 <p>{post.tittle}</p>
-//                 <p>{post.body}</p>
-//             </div>
+//     return  <>
+//                 <h2>Post Data</h2>
+//                 <p>{posts.id}</p>
+//                 <p>{posts.title}</p>
+//                 <p>{posts.body}</p>
+//             </>
 // }
-
 // export default Post
 
 // export async function getStaticPaths(){
@@ -89,20 +73,33 @@ export  const getStaticProps = async (context) => {
 //                 params:{postId:"3"}
 //             },{
 //                 params:{postId:"4"}
+//             },{
+//                 params:{postId:"5"}
+//             },{
+//                 params:{postId:"6"}
+//             },{
+//                 params:{postId:"7"}
+//             },{
+//                 params:{postId:"8"}
+//             },{
+//                 params:{postId:"9"}
+//             },{
+//                 params:{postId:"10"}
 //             }
 //         ],
 //         fallback:false
 //     }
 // }
 
-// export async function getStaticProps(context){
-//     const { params } = context
-//     const  response = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`)
-//     const data = await response.json()
-//     console.log(data)
-//     return {
+// export  const getStaticProps = async (context) => {
+
+//     let data = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`)
+//         data = await data.json()
+//     return  {
 //         props:{
-//             post:data
+//             posts:data
 //         }
 //     }
+                
 // }
+
