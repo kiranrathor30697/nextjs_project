@@ -9,15 +9,15 @@ const fetchData = async()=>{
 const Dashboard = () =>{
     
     const  {data,error} = useSWR('dashboard',fetchData)
-    if(!data)return 'Loading'
+    if(!data)return 'Loading...'
     if(error)return 'an error'
     return(
         <>
-            <div>Dashboard</div>
-            <div>{data.posts}</div>
-            <div>{data.likes}</div>
-            <div>{data.followers}</div>
-            <div>{data.following}</div>
+            <h2>Dashboard</h2>
+            <h4>posts:- {data.posts}</h4>
+            <h4>likes:- {data.likes}</h4>
+            <h4>followers:- {data.followers}</h4>
+            <h4>following:- {data.following}</h4>
         </>
     )
 }
